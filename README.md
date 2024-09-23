@@ -1,1 +1,3 @@
-![Uploading DALL·E 2024-09-23 09.30.36 - A detailed and realistic image of a llama standing in a natural environment, with a fluffy white and brown coat, long ears, and big eyes. The backgrou copy.png…]()
+![llama](https://github.com/user-attachments/assets/08aec8c9-ac4d-4fc2-be66-346776043ccb)
+
+
