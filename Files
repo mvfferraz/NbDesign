@@ -1,2 +1,21 @@
 Files:
-1. 
+Machine learning:
+
+1. Jupyter notebook for data exploration, training and validation: Machine-Learning-Nanobodies.ipynb;
+2. Data set: ifa.txt, ifa.csv (where ifa corresponds to the output of Rosetta's interface analyzer);
+
+Rosetta design:
+
+1. ifa.xml: script to run the Rosetta InterfaceAnalyzer protocol;
+2. graft.xml: script to graft the hot spots;
+2. design.xml: script to design the Nanobody;
+
+Molecular dynamics:
+1. md.mdp: simulation production parameters
+2. plumed.dat: metadynamics run file
+3. topol.top: topology file
+
+Docking:
+1. complex.pdb: structure design via Rosetta;
+2. af3.pdb: structure predict with AF3;
+3. cluspro.pdb: structure predict with ClusPro;
