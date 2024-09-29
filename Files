@@ -7,7 +7,6 @@ Machine learning:
 Rosetta design:
 
 1. ifa.xml: script to run the Rosetta InterfaceAnalyzer protocol;
-2. graft.xml: script to graft the hot spots;
 2. design.xml: script to design the Nanobody;
 
 Molecular dynamics:
