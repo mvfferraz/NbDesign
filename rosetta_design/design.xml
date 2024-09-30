@@ -1,0 +1,72 @@
+<ROSETTASCRIPTS>
+<SCOREFXNS>
+<ScoreFunction name="ref2015_cst" weights="ref2015_cst.wts" />
+<ScoreFunction name="interchain_cen" weights="interchain_cen.wts" />
+<ScoreFunction name="dockingfxn" weights="docking.wts" />
+<ScoreFunction name="ref2015_full" weights="ref2015">
+<Reweight scoretype="coordinate_constraint" weight="0.4"/>
+<Reweight scoretype="res_type_constraint" weight="0.4"/>
+</ScoreFunction>
+<ScoreFunction name="soft_rep_full" weights="soft_rep"> 
+<Reweight scoretype="coordinate_constraint" weight="0.4"/> 
+<Reweight scoretype="res_type_constraint" weight="0.4"/> 
+</ScoreFunction>
+<ScoreFunction name="ref_pssm" weights="ref2015">
+<Reweight scoretype="coordinate_constraint" weight="0.4"/>
+</ScoreFunction>
+<ScoreFunction name="ref2015" weights="ref2015"/>
+</SCOREFXNS>
+<RESIDUE_SELECTORS>
+<Index name="CDRs" resnums="218-230,245-246,249-252,292-296,300,303-305,307-309"/>
+<Not name="noCDR" selector="CDRs" />
+</RESIDUE_SELECTORS>
+<TASKOPERATIONS>
+<InitializeFromCommandline name="ifcl"/>
+<OperateOnResidueSubset name="rpkonly" selector="noCDR" > 
+<RestrictToRepackingRLT/>
+</OperateOnResidueSubset>
+<ProteinInterfaceDesign name="InterfaceDesign" repack_chain1="1" repack_chain2="1" design_chain1="0" design_chain2="1" interface_distance_cutoff="8" jump="1"/> 
+<ExtraRotamersGeneric name="extra" ex1="1" ex2="1" ex2aro="1" /> 
+<ProhibitSpecifiedBaseResidueTypes name="ala" base_types="ALA" /> 
+</TASKOPERATIONS>
+<FILTERS>
+<ShapeComplementarity name="Sc" min_sc="2.0" write_int_area="1" jump="1" confidence="0" />
+<Ddg name="ddg" scorefxn="ref2015" threshold="0" jump="1" repeats="5" repack="1" repack_bound="0" confidence="0" />
+<BuriedUnsatHbonds name="unsat" confidence="0"/>
+<IRmsd name="rmsd" jump="1" threshold="3" scorefxn="ref2015" />
+</FILTERS>
+<MOVERS>
+<CoupledMovesProtocol name="coupled_moves" task_operations="rpkonly,InterfaceDesign,ala"/>
+<PackRotamersMover name="soft_design" scorefxn="soft_rep_full" task_operations="rpkonly,Inter
+<PackRotamersMover name="hard_design" scorefxn="ref2015" task_operations="rpkonly,InterfaceD
+<MinMover name="em" chi="1" bb="1" jump="ALL" cartesian="0" type="lbfgs_armijo_nonmonotone tolerance="0.01" max_iter="200" />
+<MinMover name="soft_min" scorefxn="soft_rep_full" chi="1" bb="1" jump="ALL" cartesian="0" type="lbfgs_armijo_nonmonotone" tolerance="0.01" max_iter="200"/>
+<MinMover name="hard_min" scorefxn="ref2015_full" chi="1" bb="1" jump="ALL" cartesian="0" type="lbfgs_armijo_nonmonotone" tolerance="0.01" max_iter="200" />
+<Backrub name="backrub_motion" pivot_residues="108-238"/>
+<GenericMonteCarlo name="backrub" recover_low="1" temperature="1.0" trials="500" scorefxn_name="REF2015" mover_name="backrub_motion"/>
+<RotamerTrialsMinMover name="RTmin" scorefxn="ref2015" task_operations="rpkonly"/>
+<InterfaceAnalyzerMover name="ifa" scorefxn="ref2015" pack_separated="1" pack_input="0" tracer="0" interface_sc="1" interface="A_B" />
+<FavorSequenceProfile name="FPS" pssm="vhh.pssm" scaling="none"
+scorefxns="ref_pssm" weight="1" chain="2" />
+<ParsedProtocol name="design">
+<Add mover="backrub" />
+<Add mover="coupled_moves" />
+<Add mover="soft_design" />
+<Add mover="soft_min" />
+<Add mover="backrub" />
+<Add mover="hard_design" />
+<Add mover="hard_min" />
+</ParsedProtocol>
+<LoopOver iterations="1" mover_name="design" name="design_protocol" />
+</MOVERS>
+<PROTOCOLS>
+<Add mover="FPS" />
+<Add mover="design_protocol" /> 
+<Add mover="RTmin" />
+<Add mover="hard_min" />
+<Add mover="ifa" />
+<Add filter="Sc" />
+<Add filter="ddg" /> 
+</PROTOCOLS>
+<OUTPUT scorefxn="ref2015" /> 
+</ROSETTASCRIPTS>

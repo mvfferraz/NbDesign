@@ -1,0 +1,18 @@
+<ROSETTASCRIPTS>
+<SCOREFXNS>
+<ScoreFunction name="ref2015" weights="ref2015"/>
+</SCOREFXNS> 
+<FILTERS>
+<ShapeComplementarity name="Sc" min_sc="2.0" write_int_area="1" jump="1" confidence="0" />
+<Ddg name="ddg" scorefxn="ref2015" threshold="0" jump="1" repeats="5" repack="1"
+repack_bound="0" confidence="0" /> 
+</FILTERS>
+<MOVERS>
+<InterfaceAnalyzerMover name="ifa" scorefxn="ref2015" pack_separated="1" pack_input="1" tracer="0" interface_sc="1" interface="A_B" />
+</MOVERS> 
+<PROTOCOLS>
+<Add mover="ifa" />
+<Add filter="Sc" /> 
+<Add filter="ddg" /> 
+</PROTOCOLS>
+</ROSETTASCRIPTS>
