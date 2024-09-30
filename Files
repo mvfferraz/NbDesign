@@ -1,5 +1,5 @@
 Files:
-**Machine learning:**
+Machine learning:
 
 1. Jupyter notebook for data exploration, training and validation: Paper_nanobodies_design.ipynb;
 2. Data set: ifa.txt, ifa.csv (where ifa corresponds to the output of Rosetta's interface analyzer);
