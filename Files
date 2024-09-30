@@ -13,6 +13,8 @@ Molecular dynamics:
 1. md.mdp: simulation production parameters
 2. plumed.dat: metadynamics run file
 3. topol.top: topology file
+4. toppar: topology parameters
+5. step3_input.gro: initial coordinates for the PDB ID 6W41 with glycans
 
 Docking:
 1. complex.pdb: structure design via Rosetta;
