@@ -1,0 +1,40 @@
+integrator              = sd
+dt                      = 0.004
+nsteps                  = 25000000
+nstxtcout               = 5000
+nstvout                 = 5000
+nstfout                 = 5000
+nstcalcenergy           = 5000
+nstenergy               = 5000
+nstlog                  = 5000
+;
+cutoff-scheme           = Verlet
+nstlist                 = 20
+vdwtype                 = Cut-off
+vdw-modifier            = None
+DispCorr                = EnerPres
+rvdw                    = 0.9
+rlist                   = 0.9
+rcoulomb                = 0.9
+coulombtype             = PME
+;
+;tcoupl                  = Nose-Hoover
+tc_grps                 = SOLU SOLV
+tau_t                   = 2.0 2.0
+ref_t                   = 303.15 303.15
+bd_fric                 = 0.5
+;
+pcoupl                  = Parrinello-Rahman
+pcoupltype              = isotropic
+tau_p                   = 5.0
+compressibility         = 4.5e-5
+ref_p                   = 1.0
+;
+constraints             = h-bonds
+constraint_algorithm    = LINCS
+continuation            = yes
+;
+nstcomm                 = 100
+comm_mode               = linear
+comm_grps               = SOLU SOLV
+;

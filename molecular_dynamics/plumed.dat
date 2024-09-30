@@ -1,0 +1,69 @@
+RESTART
+MOLINFO MOLTYPE=protein STRUCTURE=template.pdb
+WHOLEMOLECULES ENTITY0=1-3269
+# DEBUG DETAILED_TIMERS
+
+# AB over backbone
+ALPHABETA ...
+    ATOMS1=@phi-93 REFERENCE=pi
+    ATOMS2=@phi-94
+    ATOMS3=@phi-95
+    ATOMS4=@phi-96
+    ATOMS5=@phi-97
+    ATOMS6=@phi-98
+    ATOMS7=@phi-99
+    ATOMS8=@phi-100
+    ATOMS9=@phi-101
+    ATOMS10=@phi-102
+    ATOMS11=@psi-93
+    ATOMS12=@psi-94
+    ATOMS13=@psi-95
+    ATOMS14=@psi-96
+    ATOMS15=@psi-97
+    ATOMS16=@psi-98
+    ATOMS17=@psi-99
+    ATOMS18=@psi-100
+    ATOMS19=@psi-101
+    ATOMS20=@psi-102
+    LABEL=abbb
+... ALPHABETA
+
+# AB over sidechains
+ALPHABETA ...
+    ATOMS1=@chi1-96 REFERENCE=pi
+    ATOMS2=@chi1-98
+    ATOMS3=@chi1-99
+    ATOMS4=@chi1-100
+    ATOMS5=@chi1-101
+    ATOMS6=@chi1-102
+    LABEL=absc
+... ALPHABETA
+
+# Alpha-helix for CDR
+helix: ALPHARMSD RESIDUES=93-102 TYPE=DRMSD LESS_THAN={RATIONAL R_0=0.08 NN=8 MM=12}
+
+# Beta-sheet for CDR
+anti: ANTIBETARMSD RESIDUES=93-102 TYPE=DRMSD LESS_THAN={RATIONAL R_0=0.08 NN=8 MM=12}
+
+# Global CDR dihedral (Residues 98, 106, 112, 120)
+#res1: COM ATOMS=1458,1459,1460,1461,1462,1463,1464,1465,1466,1467
+#res2: COM ATOMS=1569,1570,1571,1572,1573,1574,1575
+#res3: COM ATOMS=1658,1659,1660,1661,1662,1663,1664,1665,1666,1667,1668,1669,1670,1671
+#res4: COM ATOMS=1786,1787,1788,1789,1790,1791,1792,1793,1794,1795,1796,1797,1798,1799,1800,1801,1802
+#dih: TORSION ATOMS=res1,res2,res3,res4
+
+PBMETAD ...
+    LABEL=pbmetad
+    ARG=abbb,absc,helix.lessthan,anti.lessthan
+    PACE=500 HEIGHT=1.2 BIASFACTOR=24 WALKERS_MPI
+    SIGMA=1.5,0.5,2.0,1.5
+    FILE=HILLS_abbb,HILLS_absc,HILLS_helix,HILLS_anti
+    GRID_MIN=-1,-1,-1,-1
+    GRID_MAX=50,20,100,100
+    GRID_WFILES=GRID_abbb,GRID_absc,GRID_helix,GRID_anti
+    #GRID_RFILES=GRID_abbb,GRID_absc,GRID_helix,GRID_anti
+    GRID_WSTRIDE=10000
+... PBMETAD
+
+PRINT STRIDE=500 FILE=BIAS ARG=abbb,absc,helix.lessthan,anti.lessthan,pbmetad.bias
+
