@@ -1,0 +1,2 @@
+total_score,Sc,Sc_int_area,complex_normalized,dG_cross,dG_cross/dSASAx100,dG_separated,dG_separated/dSASAx100,dSASA_hphobic,dSASA_int,dSASA_polar,ddg,delta_unsatHbonds,hbond_E_fraction,hbonds_int,nres_all,nres_int,packstat,per_residue_energy_int,sc_value,side1_normalized,side1_score,side2_normalized,side2_score,description
+0.0,0.712,606.825,-3.378,-41.987,-3.578,-36.55,-3.114,715.251,1173.586,458.335,-37.124,4.0,0.16,5.0,323.0,47.0,0.0,-0.899,0.688,-1.36,-35.347,-0.33,-6.923,vhh_cov_09370_0001
